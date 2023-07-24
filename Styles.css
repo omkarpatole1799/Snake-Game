@@ -42,3 +42,8 @@
     border-radius: 0.5rem;
     background-color: rgb(189, 231, 104);
 }
+
+#start-button{
+    padding: 0.5rem;
+    border-radius: 1rem;
+}
