@@ -10,12 +10,20 @@
 <body>
     <main class="main">
         <h3>Snake Game</h3>
+        <p id="score"></p>
+        <div class="difficulty">
+            <select name="" id="difficulty-level">
+                <option value=0>Choose difficulty level</option>
+                <option value=1>Easy</option>
+                <option value=2>Medium</option>
+                <option value=3>Hard</option>
+            </select>
+        </div>
+        <button id="start-button">Start</button>
     </main>
-
-    <div class="body">
-        
+        <div class="body">
         <div id="board"></div>
     </div>
 </body>
-<script src="Script.js"></script>
+<script src="Script.js" type="module"></script>
 </html>
