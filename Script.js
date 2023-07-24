@@ -1,10 +1,50 @@
 "use strict";
 const board = document.getElementById("board");
+const scoreEl = document.getElementById("score");
+const difficultyLevelElement = document.getElementById("difficulty-level");
+const startButton = document.getElementById("start-button");
+
 let snakeArr;
 let snakeFood;
 let snakeMovements;
+let isDiffifulyLevelSelected = false;
+let isGameStarted = false;
+let score = 0;
+let speed = 250; // default speed
+let level = 0;
+
+function setSpeed(l) {
+  // l = level
+  if (l === "1") {
+    speed = 250;
+    console.log(speed);
+  }
+  if (l === "2") {
+    speed = 200;
+    console.log(speed);
+  }
+  if (l === "3") {
+    speed = 100;
+    console.log(speed);
+  }
+}
+
+difficultyLevelElement.addEventListener("change", () => {
+  level =
+    difficultyLevelElement.options[difficultyLevelElement.selectedIndex].value;
+});
+
+startButton.addEventListener("click", () => {
+  if (level === 0) {
+    alert("Please select a level!");
+  } else {
+    newGame();
+  }
+});
 
 function newGame() {
+  console.log(level); // this showing perfect level as selected (1,2,3)
+  setSpeed(level);
   snakeArr = [
     {
       x: 10,
@@ -12,15 +52,20 @@ function newGame() {
     },
   ];
   snakeFood = [
-    { x: 10, y: 14 },
-    { x: 15, y: 5 },
+    { x: 10, y: 14 }, // food 1
+    { x: 15, y: 5 }, // food 2
   ];
   snakeMovements = { x: 0, y: 0 };
+  score = 0;
+
+  isGameStarted = true;
+
+  if (isGameStarted) {
+    setInterval(() => {
+      gameEngine();
+    }, speed);
+  }
 }
-newGame();
-setInterval(() => {
-  gameEngine();
-}, 150);
 
 // check collision
 function isColloide(snape) {
@@ -41,7 +86,6 @@ function isColloide(snape) {
     newGame();
     return true;
   }
-
   return false;
 }
 // check if food is eaten
@@ -51,9 +95,11 @@ function checkFoodEaten(snape) {
   let condition2 =
     snape[0].x === snakeFood[1].x && snape[0].y === snakeFood[1].y;
   if (condition1) {
+    score += 1;
     return { first: true, second: false };
   }
   if (condition2) {
+    score += 1;
     return { first: false, second: true };
   }
   return { first: false, second: false };
@@ -79,8 +125,10 @@ function generateFood2() {
   snakeFood[1] = { x: a, y: b };
 }
 
+// game engine
 function gameEngine() {
-  if (isColloide(snakeArr)) {
+  scoreEl.innerHTML = `Score: ${score}`;
+  if (isColloide(snakeArr, level)) {
     return;
   }
   // generate food if eaten
@@ -109,6 +157,7 @@ function gameEngine() {
   snakeArr[0].x += snakeMovements.x;
   snakeArr[0].y += snakeMovements.y;
 
+  board.style.display = "";
   // display snake
   board.innerHTML = "";
 
@@ -137,33 +186,33 @@ function gameEngine() {
   foodElement2.style.gridRowStart = snakeFood[1].y;
   foodElement2.classList.add("snake-food");
   board.appendChild(foodElement2);
+
+  // controls
+  window.addEventListener("keydown", (e) => {
+    switch (e.key) {
+      case "ArrowUp":
+        snakeMovements.x = 0;
+        snakeMovements.y = -1;
+
+        break;
+
+      case "ArrowDown":
+        snakeMovements.x = 0;
+        snakeMovements.y = 1;
+        break;
+
+      case "ArrowLeft":
+        snakeMovements.x = -1;
+        snakeMovements.y = 0;
+        break;
+
+      case "ArrowRight":
+        snakeMovements.x = 1;
+        snakeMovements.y = 0;
+        break;
+
+      default:
+        break;
+    }
+  });
 }
-
-// controls
-window.addEventListener("keydown", (e) => {
-  switch (e.key) {
-    case "ArrowUp":
-      snakeMovements.x = 0;
-      snakeMovements.y = -1;
-
-      break;
-
-    case "ArrowDown":
-      snakeMovements.x = 0;
-      snakeMovements.y = 1;
-      break;
-
-    case "ArrowLeft":
-      snakeMovements.x = -1;
-      snakeMovements.y = 0;
-      break;
-
-    case "ArrowRight":
-      snakeMovements.x = 1;
-      snakeMovements.y = 0;
-      break;
-
-    default:
-      break;
-  }
-});
