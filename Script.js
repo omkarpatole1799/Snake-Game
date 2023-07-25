@@ -3,6 +3,7 @@ const board = document.getElementById("board");
 const scoreEl = document.getElementById("score");
 const difficultyLevelElement = document.getElementById("difficulty-level");
 const startButton = document.getElementById("start-button");
+const gameOverElement = document.getElementById("game-over");
 
 let snakeArr;
 let snakeFood;
@@ -45,7 +46,6 @@ startButton.addEventListener("click", () => {
 });
 
 function newGame() {
-  console.log(level); // this showing perfect level as selected (1,2,3)
   setSpeed(level);
   snakeArr = [
     {
@@ -61,7 +61,6 @@ function newGame() {
   score = 0;
 
   isGameStarted = true;
-
   if (isGameStarted) {
     gameEngineInterval = setInterval(() => {
       gameEngine();
@@ -74,6 +73,7 @@ function isColloide(snape) {
   // self collision
   for (let i = 1; i < snape.length; i++) {
     if (snape[i].x === snape[0].x && snape[i].y === snape[0].y) {
+      gameOverElement.classList.remove("none");
       newGame();
       return true;
     }
@@ -84,7 +84,9 @@ function isColloide(snape) {
     snape[0].y >= 20 ||
     snape[0].x <= 0 ||
     snape[0].y <= 0
-  ) {    
+  ) {
+    gameOverElement.classList.remove("none");
+
     newGame();
     return true;
   }
@@ -129,6 +131,7 @@ function generateFood2() {
 
 // game engine
 function gameEngine() {
+  gameOverElement.classList.add("none");
   scoreEl.innerHTML = `Score: ${score}`;
   if (isColloide(snakeArr, level)) {
     clearInterval(gameEngineInterval);
