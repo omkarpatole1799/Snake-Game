@@ -1,4 +1,7 @@
 "use strict";
+
+import { moveSnake } from "./controls.js";
+
 const board = document.getElementById("board");
 const scoreEl = document.getElementById("score");
 const difficultyLevelElement = document.getElementById("difficulty-level");
@@ -194,31 +197,5 @@ function gameEngine() {
   board.appendChild(foodElement2);
 
   // controls
-  window.addEventListener("keydown", (e) => {
-    switch (e.key) {
-      case "ArrowUp":
-        snakeMovements.x = 0;
-        snakeMovements.y = -1;
-
-        break;
-
-      case "ArrowDown":
-        snakeMovements.x = 0;
-        snakeMovements.y = 1;
-        break;
-
-      case "ArrowLeft":
-        snakeMovements.x = -1;
-        snakeMovements.y = 0;
-        break;
-
-      case "ArrowRight":
-        snakeMovements.x = 1;
-        snakeMovements.y = 0;
-        break;
-
-      default:
-        break;
-    }
-  });
+  moveSnake(snakeMovements);
 }
