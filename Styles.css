@@ -79,8 +79,9 @@ body{
 
 #game-over{
     position: absolute;
+    font-size: 2rem;
     top: 18.5rem;
-    right: 14.3rem;
+    right: 11.3rem;
 }
 .none{
     display: none;
