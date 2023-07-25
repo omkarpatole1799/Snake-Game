@@ -12,8 +12,10 @@ let isGameStarted = false;
 let score = 0;
 let speed = 250; // default speed
 let level = 0;
+let gameEngineInterval;
 
 function setSpeed(l) {
+  clearInterval(gameEngineInterval);
   // l = level
   if (l === "1") {
     speed = 250;
@@ -61,7 +63,7 @@ function newGame() {
   isGameStarted = true;
 
   if (isGameStarted) {
-    setInterval(() => {
+    gameEngineInterval = setInterval(() => {
       gameEngine();
     }, speed);
   }
@@ -82,7 +84,7 @@ function isColloide(snape) {
     snape[0].y >= 20 ||
     snape[0].x <= 0 ||
     snape[0].y <= 0
-  ) {
+  ) {    
     newGame();
     return true;
   }
@@ -129,6 +131,7 @@ function generateFood2() {
 function gameEngine() {
   scoreEl.innerHTML = `Score: ${score}`;
   if (isColloide(snakeArr, level)) {
+    clearInterval(gameEngineInterval);
     return;
   }
   // generate food if eaten
