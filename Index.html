@@ -8,8 +8,10 @@
 
 </head>
 <body>
-    <main class="main">
-        <h3>Snake Game</h3>
+    <div >
+        <h3 class="game-heading">Snake Game</h3>
+    </div>
+    <div class="game-info">
         <p id="score"></p>
         <div class="difficulty">
             <select name="" id="difficulty-level">
@@ -20,10 +22,11 @@
             </select>
         </div>
         <button id="start-button">Start</button>
-    </main>
-        <div class="body">
+    </div>
+    <div class="body">
         <div id="board"></div>
     </div>
+    <div id="game-over" class="none"><h3>Gameover!</h3></div>
 </body>
 <script src="Script.js" type="module"></script>
 </html>
