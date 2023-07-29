@@ -18,23 +18,6 @@ let speed = 250; // default speed
 let level = 0;
 let gameEngineInterval;
 
-function setSpeed(l) {
-  clearInterval(gameEngineInterval);
-  // l = level
-  if (l === "1") {
-    speed = 250;
-    console.log(speed);
-  }
-  if (l === "2") {
-    speed = 200;
-    console.log(speed);
-  }
-  if (l === "3") {
-    speed = 100;
-    console.log(speed);
-  }
-}
-
 difficultyLevelElement.addEventListener("change", () => {
   level =
     difficultyLevelElement.options[difficultyLevelElement.selectedIndex].value;
@@ -68,6 +51,22 @@ function newGame() {
     gameEngineInterval = setInterval(() => {
       gameEngine();
     }, speed);
+  }
+}
+function setSpeed(l) {
+  clearInterval(gameEngineInterval);
+  // l = level
+  if (l === "1") {
+    speed = 250;
+    console.log(speed);
+  }
+  if (l === "2") {
+    speed = 200;
+    console.log(speed);
+  }
+  if (l === "3") {
+    speed = 100;
+    console.log(speed);
   }
 }
 
